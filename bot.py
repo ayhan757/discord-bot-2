@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 from config import token  # Botun tokenini config dosyasından içe aktarma
-
+import random
 intents = discord.Intents.default()
 intents.members = True  # Botun kullanıcılarla çalışmasına ve onları banlamasına izin verir
 intents.message_content = True
@@ -34,5 +34,10 @@ async def ban_error(ctx, error):
         await ctx.send("Bu komutu çalıştırmak için yeterli izniniz yok.")
     elif isinstance(error, commands.MemberNotFound):
         await ctx.send("Kullanıcı bulunamadı!")
+
+@bot.command
+async def secim(ctx, *x):
+    a = random.choise(x)
+    await ctx.send(a)
 
 bot.run(token)
