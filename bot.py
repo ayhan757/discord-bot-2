@@ -6,11 +6,21 @@ intents = discord.Intents.default()
 intents.members = True  # Botun kullanıcılarla çalışmasına ve onları banlamasına izin verir
 intents.message_content = True
 
-bot = commands.Bot(command_prefix='!', intents=intents)
+bot = commands.Bot(command_prefix='.', intents=intents)
 
 @bot.event
 async def on_ready():
     print(f'Giriş yapıldı:  {bot.user.name}')
+
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    elif message.content.startswith(bot.command_prefix):
+        await bot.process_commands(message)
+    else:
+        
+        await message.channel.send(message.content)
 
 @bot.command()
 async def start(ctx):
